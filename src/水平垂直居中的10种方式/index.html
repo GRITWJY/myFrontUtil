@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>水平垂直居中的几种方式</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="css/absolute-margin-auto.css"
+    />
+    <link rel="stylesheet" type="text/css" href="css/absolute-margin.css" />
+    <link rel="stylesheet" type="text/css" href="css/css-table.css" />
+    <link rel="stylesheet" type="text/css" href="css/flexbox.css" />
+    <link rel="stylesheet" type="text/css" href="css/absolute-calc.css" />
+    <link rel="stylesheet" type="text/css" href="css/absolute-transform.css" />
+    <link rel="stylesheet" type="text/css" href="css/lineheight.css" />
+  </head>
+  <body>
+    <h1>一、居中元素定宽高</h1>
+    <h3>方法一、margin:auto</h3>
+    <div class="wrap">
+      <div></div>
+    </div>
+    <span>
+      当一个元素绝对定位时，它会根据第一个不是static定位的祖先元素定位，但里面的元素需要确定宽高
+    </span>
+    <h3>方法二、负margin法</h3>
+    <div class="wrap2">
+      <div></div>
+    </div>
+    <span>
+      我们首先用top:50%和left:50%让inner的坐标原点（左上角）移动到container的中心，然后再利用负margin让它往左偏移自身宽的一半，再往上偏移自身高的一半，这样inner的中心点就跟container的中心点对齐了
+    </span>
+    <h3>方法三、absolute+calc</h3>
+    <div class="wrap5">
+      <div></div>
+    </div>
+    <span>既然top的百分比是基于元素的左上角，那么在减去宽度的一半就好了</span>
+
+    <h1>二、居中元素不定宽高</h1>
+    <h3>方法一、table-cell</h3>
+    <div class="wrap3">
+      <div>居中布局</div>
+    </div>
+    <span>
+      div上面的vertical-align: middle是控制垂直方向上的居中的，而text-align:
+      center是控制水平方向的。
+    </span>
+    <h3>方法二、弹性盒子法</h3>
+    <div class="wrap4">
+      <div>水平居中</div>
+    </div>
+    <h3>方法三、absolute + transform</h3>
+    <div class="wrap6">
+      <div>12345</div>
+    </div>
+    <span>
+      这个与上面的负margin有点类似，但这里不需要知道元素的具体宽高，transform会自动根据元素宽高
+    </span>
+
+    <h3>方法四lineheight</h3>
+    <div class="wrap7">
+      <div>123432</div>
+    </div>
+    <span>
+      把box设置为行内元素，通过text-align就可以做到水平居中，但很多同学可能不知道通过vertical-align也可以在垂直方向做到居中
+    </span>
+    <img src="css/img.png" alt="兼容性" />
+  </body>
+  <script></script>
+</html>

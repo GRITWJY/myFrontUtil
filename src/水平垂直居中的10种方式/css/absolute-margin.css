@@ -1,0 +1,22 @@
+/*
+绝对定位时,是基于元素的左上角定位,即左上角在父元素中的位置是哪里
+
+这里可以借助负外边距, 指定子元素的外边距为子元素宽高一般,就可以居中了
+*/
+
+.wrap2 {
+    border: 1px solid red;
+    width: 300px;
+    height: 300px;
+    position: relative;
+}
+.wrap2 div {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px; /*宽高一半*/
+    margin-top: -50px;
+    background-color: green;
+}

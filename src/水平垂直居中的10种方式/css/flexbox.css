@@ -1,0 +1,13 @@
+
+.wrap4 {
+    width: 300px;
+    height: 300px;
+    border: 1px solid #f00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wrap4 div {
+    border: 1px solid #ffff00;
+    padding: 20px;
+}

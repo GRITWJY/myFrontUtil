@@ -1,0 +1,23 @@
+/*
+
+把box设置为行内元素，通过text-align就可以做到水平居中
+通过vertical-align也可以在垂直方向做到居中
+*/
+
+.wrap7 {
+    width: 300px;
+    height: 300px;
+    border: 1px solid rebeccapurple;
+
+    line-height: 300px;
+    text-align: center;
+    font-size: 0;
+}
+
+.wrap7 div {
+    font-size: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: initial;
+    text-align: left;
+}

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS算法可视化</title>
+  </head>
+  <body>
+    <div
+      style="display: flex; flex-direction: row; justify-content: space-between"
+    >
+      <div style="display: flex; flex-direction: column">
+        <button id="refresh">刷新</button>
+        <div>
+          <button id="btn">冒泡排序</button>
+          <span id="bubbleSort"></span>
+        </div>
+        <div>
+          <button id="btn1">改进冒泡排序</button>
+          <span id="bubbleSort2"></span>
+        </div>
+        <div>
+          <button id="btn2">选择排序</button>
+          <span id="selectionSort"></span>
+        </div>
+        <div>
+          <button id="btn3">快速排序</button>
+          <span id="quickSort"></span>
+        </div>
+        <div>
+          <button id="btn4">插入排序</button>
+          <span id="insertSort"></span>
+        </div>
+      </div>
+      <canvas
+        id="canvas"
+        width="1000"
+        height="700"
+        style="background: #000"
+      ></canvas>
+    </div>
+
+    <script>
+      let nums = []; // 需要排序的数组
+      const canvas = document.getElementById("canvas"); // 画布
+      const ctx = canvas.getContext("2d");
+      ctx.translate(500, 350); // 移动中心到（500，500）
+      const CosandSin = []; // 存储坐标
+
+      // 事件绑定
+
+      document.getElementById("btn4").onclick = function () {
+        insertionSort(nums);
+      };
+
+      document.getElementById("btn3").onclick = async function () {
+        // 快速排序
+        let start = new Date();
+        await quickSort(nums, 0, nums.length - 1);
+        drawAll(nums);
+        let span = document.getElementById("quickSort");
+        span.innerHTML = new Date() - start;
+      };
+      document.getElementById("btn2").onclick = function () {
+        // 选择排序
+        selectionSort(nums);
+        drawAll(nums);
+      };
+      document.getElementById("btn").onclick = function () {
+        // 冒泡排序
+        bubbleSort(nums);
+      };
+      document.getElementById("btn1").onclick = function () {
+        // 改进的冒泡排序
+        bubbleSort2(nums);
+      };
+      document.getElementById("refresh").onclick = function () {
+        //初始化，刷新
+        init();
+        drawAll(nums);
+      };
+
+      // 随机数组
+      function init() {
+        nums = [];
+        for (let i = 0; i < 4; i++) {
+          const arr = [...Array(180).keys()]; //
+          const res = [];
+          while (arr.length) {
+            // 打乱
+            const randomIndex = Math.random() * arr.length - 1;
+            res.push(arr.splice(randomIndex, 1)[0] * 1.5);
+          }
+          nums = [...nums, ...res];
+        }
+        // 画布处理
+        ctx.clearRect(-500, -350, 1000, 700);
+        ctx.fillStyle = "white";
+
+        // 绘制画布
+        for (let i = 0; i < 360; i++) {
+          const jiaodu = (i / 180) * Math.PI;
+          CosandSin.push({ cos: Math.cos(jiaodu), sin: Math.sin(jiaodu) });
+        }
+      }
+
+      // 矩形框
+      function Rect(x, y, width, height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+      }
+
+      Rect.prototype.draw = function () {
+        ctx.beginPath();
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.closePath();
+      };
+
+      function drawAll(arr) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            ctx.clearRect(-500, -350, 1000, 700);
+            const rects = [];
+            for (let i = 0; i < arr.length; i++) {
+              const num = arr[i];
+              const { cos, sin } = CosandSin[Math.floor(i / 2)];
+              const x = num * cos;
+              const y = num * sin;
+              rects.push(new Rect(x, y, 5, 3));
+            }
+            rects.forEach((rect) => rect.draw());
+            resolve("draw success");
+          });
+        });
+      }
+
+      init();
+
+      drawAll(nums);
+
+      // 冒泡排序
+      async function bubbleSort(arr) {
+        let len = arr.length;
+        let start = new Date();
+        for (let i = 0; i < len; i++) {
+          for (let j = 0; j < len - 1 - i; j++) {
+            if (arr[j] > arr[j + 1]) {
+              let temp = arr[j + 1];
+              arr[j + 1] = arr[j];
+              arr[j] = temp;
+            }
+          }
+          await drawAll(arr);
+        }
+        let span = document.getElementById("bubbleSort");
+        span.innerHTML = new Date() - start;
+        return arr;
+      }
+
+      // 改进的冒泡排序
+      async function bubbleSort2(arr) {
+        let start = new Date();
+
+        let i = arr.length - 1;
+        while (i > 0) {
+          let pos = 0; // 这一趟过程中发送了交换记录就记下位置
+          for (let j = 0; j < i; j++) {
+            if (arr[j] > arr[j + 1]) {
+              pos = j;
+              let temp = arr[j + 1];
+              arr[j + 1] = arr[j];
+              arr[j] = temp;
+            }
+          }
+          i = pos; //有交换，下次就到最后一次交换前截止
+          await drawAll(arr);
+        }
+
+        let span = document.getElementById("bubbleSort2");
+        span.innerHTML = new Date() - start;
+
+        return arr;
+      }
+
+      // 选择排序
+      async function selectionSort(arr) {
+        let start = new Date();
+
+        var len = arr.length;
+        var minIndex, temp;
+
+        for (let i = 0; i < len - 1; i++) {
+          // 最外的一层遍历
+          minIndex = i;
+          for (let j = i + 1; j < len; j++) {
+            // 从当前的下一个开始，找到最小的值
+            if (arr[j] < arr[minIndex]) {
+              minIndex = j;
+            }
+          }
+
+          // 将最小的与i替换
+          temp = arr[i];
+          arr[i] = arr[minIndex];
+          arr[minIndex] = temp;
+          await drawAll(arr);
+        }
+
+        let span = document.getElementById("selectionSort");
+        span.innerHTML = new Date() - start;
+
+        return arr;
+      }
+
+      /**
+       * 通过一趟排序，将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分的关键字小，
+       * 则可以分别对这两个部分记录继续进行排序，以达到整个序列有序
+       **/
+
+      async function quickSort(array, left, right) {
+        drawAll(nums);
+        // 是否是数组
+        if (
+          Object.prototype.toString.call(array).slice(8, -1) === "Array" &&
+          typeof left === "number" &&
+          typeof right === "number"
+        ) {
+          if (left < right) {
+            let x = array[x];
+            let i = left - 1;
+            let temp;
+            for (let j = left; j <= right; j++) {
+              if (array[j] <= x) {
+                i++;
+                temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+              }
+            }
+
+            quickSort(array, left, i - 1);
+            quickSort(array, i + 1, right);
+          }
+          return array;
+        }
+      }
+
+      /**
+       * 1、从第一个元素开始，该元素可以认为已经被排序
+       * 2、取出下一个元素，在已经排序的元素序列中从后向前扫描
+       * 3、如果改元素大于新元素，将该元素移到下一位置
+       * */
+      async function insertionSort(array) {
+        if (Object.prototype.toString.call(array).slice(8, -1) === "Array") {
+          let start = new Date();
+          for (let i = 1; i < array.length; i++) {
+            let key = array[i];
+            let j = i - 1;
+            while (j >= 0 && array[j] > key) {
+              array[j + 1] = array[j];
+              j--;
+            }
+            array[j + 1] = key;
+            await drawAll(array);
+          }
+          let span = document.getElementById("insertSort");
+          span.innerHTML = new Date() - start;
+          return array;
+        }
+      }
+    </script>
+  </body>
+</html>

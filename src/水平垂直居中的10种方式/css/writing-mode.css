@@ -1,0 +1,30 @@
+
+/*
+
+writing-mode可以改变文字的显示方向
+更神奇的是所有水平方向上的css属性，都会变为垂直方向上的属性，
+比如text-align，通过writing-mode和text-align就可以做到水平和垂直方向的居中了，
+只不过要稍微麻烦一点
+*/
+
+
+.up {
+    width: 300px;
+    height: 300px;
+    writing-mode: vertical-lr;
+    text-align: center;
+    border: 1px solid red;
+}
+
+.up-inner {
+    writing-mode: horizontal-tb;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
+.box {
+    display: inline-block;
+    margin: auto;
+    text-align: left;
+}

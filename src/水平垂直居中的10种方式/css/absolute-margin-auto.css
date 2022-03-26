@@ -1,0 +1,26 @@
+/*
+绝对定位另一种方式, 就是通过margin 的auto自动居中
+
+但  这里需要元素指定宽高,以及子元素的4个方向都设为0
+*/
+
+
+.wrap {
+    border: 1px solid red;
+    width: 300px;
+    height: 300px;
+    position: relative;
+}
+
+.wrap div {
+    position: absolute;
+    margin: auto;
+    width: 50px;
+    height: 50px;
+    background: #ff0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+

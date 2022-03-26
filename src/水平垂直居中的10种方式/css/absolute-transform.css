@@ -1,0 +1,25 @@
+
+/*
+
+修复绝对定位的问题，还可以使用css3新增的transform，
+transform的translate属性也可以设置百分比，
+其是相对于自身的宽和高，所以可以讲translate设置为-50%，
+就可以做到居中了
+
+*/
+
+
+.wrap6{
+    width: 300px;
+    height: 300px;
+    position: relative;
+    border: 1px solid red;
+}
+
+.wrap6 div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: green;
+}
