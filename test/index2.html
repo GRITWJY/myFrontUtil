@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>弹窗组件</title>
+    <style>
+      .wrap {
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .box {
+        position: relative;
+        width: 668px;
+        height: 608px;
+        border-radius: 5px;
+        border: 1px solid #cccccc;
+        background: #ffffff;
+      }
+
+      .title {
+        height: 50px;
+        position: relative;
+
+        width: 100%;
+        border-bottom: 1px solid #cccccc;
+      }
+      .title text {
+        display: inline-block;
+        line-height: 50px;
+        margin-left: 20px;
+        color: #ff0000;
+        height: 50px;
+        width: auto;
+        border-bottom: 2px solid #ff0000;
+      }
+      .title .close {
+        position: absolute;
+        right: 20px;
+        width: 20px;
+        height: 20px;
+        top: 15px;
+        cursor: pointer;
+      }
+
+      .close::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        background: #aaaaaa;
+        top: 10px;
+        transform: rotate(45deg);
+      }
+
+      .close::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        background: #aaaaaa;
+        top: 10px;
+        transform: rotate(-45deg);
+      }
+
+      .imgBox {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        padding: 20px;
+      }
+
+      .img {
+        width: 110px;
+        height: 110px;
+        border: 1px solid #cccccc;
+        margin-right: 20px;
+      }
+
+      .btns {
+        position: absolute;
+        bottom: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+      .upload {
+        background: #ff0000;
+        padding: 10px 30px;
+        color: #fff;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+
+      .cancel {
+        background: #cccccc;
+        padding: 10px 30px;
+        color: #fff;
+        border-radius: 5px;
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="box">
+        <div class="title">
+          <text>上传图片</text>
+          <span class="close"></span>
+        </div>
+
+        <div class="imgBox">
+          <div class="img add"></div>
+        </div>
+
+        <div class="btns">
+          <div class="upload">上传</div>
+          <div class="cancel">取消</div>
+        </div>
+      </div>
+      <input
+        style="display: none"
+        id="upload-file"
+        type="file"
+        accept=".jepg,.png,.jpg"
+      />
+    </div>
+    <script>
+      const imgBox = document.getElementsByClassName("imgBox")[0];
+      const inputFile = document.getElementById("upload-file");
+      const addImg = document.getElementsByClassName("add")[0];
+
+      addImg.addEventListener("click", function () {
+        inputFile.click();
+      });
+
+      let file = null;
+      inputFile.addEventListener("change", function (event) {
+        file = this.files[0];
+        const reader = new FileReader();
+        let base64 = "";
+        reader.readAsDataURL(file);
+        reader.onload = function (event) {
+          base64 = reader.result;
+          let newImg = document.createElement("img");
+          newImg.className = "img";
+          newImg.src = base64;
+          imgBox.insertBefore(newImg, addImg);
+        };
+      });
+
+      const uploadBtn = document.getElementsByClassName("upload")[0];
+      uploadBtn.addEventListener("click", function () {
+        if (!file) return;
+        const xhr = new XMLHttpRequest();
+        xhr.open("post", "https://mp.toutiao.com/profile_v2/");
+        xhr.onload = function () {
+          console.log(xhr.reponse);
+        };
+        const form = new FormData();
+        form.append("file", file);
+        xhr.send(form);
+      });
+    </script>
+  </body>
+</html>

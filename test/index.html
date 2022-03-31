@@ -1,12 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-  <script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      #main {
+        width: 200px;
+        margin: 0 auto;
+      }
+      #demo {
+        text-align: center;
+        font-size: 30px;
+      }
+      #text {
+        width: 100%;
+      }
 
-  </script>
-</body>
+      .item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="main">
+      <p id="demo">Todos</p>
+      <input id="text" type="text" value="" />
+
+      <div id="list"></div>
+    </div>
+    <script type="text/javascript">
+      let domInput = document.getElementById("text");
+      let domList = document.getElementById("list");
+      document.onkeyup = function () {
+        if (event.keyCode == "13") {
+          // 按下enter键
+          let domDiv = document.createElement("div");
+          let domContent = document.createElement("div");
+          let domSpan = document.createElement("span");
+          let val = domInput.value;
+
+          domList.appendChild(domDiv);
+          domDiv.appendChild(domContent);
+          domDiv.appendChild(domSpan);
+          domDiv.className = "item";
+          domContent.innerHTML = val;
+          domContent.className = "todoContent";
+          domInput.value = "";
+          domSpan.innerHTML = "&times";
+          domSpan.onclick = function () {
+            domList.removeChild(this.parentNode);
+          };
+        }
+      };
+
+      let todoDiv = document.getElementsByClassName("item");
+
+      function select() {
+        domInput.addEventListener("keyup", function (e) {
+          let str = e.target.value;
+          let reg = new RegExp(`(${str})`, "g");
+
+          for (let i = 0; i < todoDiv.length; i++) {
+            let txt = todoDiv[i].getElementsByClassName("todoContent")[0];
+            console.log(txt);
+            let newStr = txt.innerText.replace(
+              reg,
+              "<font color=red>$1</font>"
+            );
+            if (txt.innerText.indexOf(str) == -1) {
+              todoDiv[i].style.display = "none";
+            } else {
+              txt.innerHTML = newStr;
+            }
+            if (str == "") {
+              todoDiv[i].style.display = "flex";
+            }
+          }
+        });
+      }
+      select();
+    </script>
+  </body>
 </html>
