@@ -7,4 +7,5 @@
 
 ## 过滤控制 `arr.filter(Boolean)`
 
-- [数组扁平化](arrayToTree.js)
+- [扁平数据转tree](arrayToTree.js)
+- [数组扁平化](flatern.js)
