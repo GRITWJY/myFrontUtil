@@ -4,35 +4,45 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <style>
-      .a, .b, .c {
-          box-sizing: border-box;
-          border: 1px solid;
-      }
-      .wrap {
-          width: 250px;
-      }
-      .a {
-          width: 100px;
-          height: 100px;
-          float: left;
-      }
-      .b {
-          width: 100px;
-          height: 50px;
-          float: left;
-      }
-      .c {
-          width: 100px;
-          height: 100px;
-          display: inline-block;
-      }
+    .box {
+        width: 50px;
+        height: 50px;
+        border: 5px solid blue;
+    }
+
+    .box:hover {
+        border-color: red;
+    }
+
+    .trow {
+        display: flex;
+        flex-display: row;
+    }
+    .table {
+        display: flex;
+        flex-direction:column ;
+    }
   </style>
+
 </head>
 <body>
-  <div class="wrap">
-    <div class="a">a</div>
-    <div class="b">b</div>
-    <div class="c">c</div>
+  <div class="table">
+    <div class="trow">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+    <div class="trow">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+    <div class="trow">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
   </div>
+
 </body>
 </html>
